@@ -1,0 +1,25 @@
+{% block sidebar %}
+{% endblock %}
+
+<h3>Здравствуйте, {{ user }}!</h3>
+
+<h4>Благодарим вас за покупку.</h4>
+
+<div class="container">
+    {% for c in cart.rows %}
+    <div>
+        <div><h3>Product:</h3>   <h4>{{ c.product }}</h4></div>
+        <div><h3>Quantity:</h3> <h4>{{ c.count }}</h4></div>
+        {% if c.product.typeSale is null %}
+            <div><h3>Price:</h3> <h4>{{ c.product.cost * c.count }} Р</h4></div>
+        {% else %}
+            <div><h3>Price:</h3> <h4>{{ (c.product.cost - c.product.typeSale.money)*c.count }} Р</h4></div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <br>
+    <h3>Total: {{ total }}</h3>
+</div>
+
+
+<h4>Спасибо!</h4>

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block sidebar %}
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <br>
+        <div class="table-responsive">
+            <table class="table table-striped table-secondary">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Confirmed</th>
+                    <th scope="col">Products</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for check in checks %}
+                    <tr class="table">
+                        <td>{{ check.id }}</td>
+                        <td> {{ check.money }}</td>
+                        <td>{% if check.payed %}Yes{% else %}No{% endif %}</td>
+                        <td><a href="{{ path('user-check-products', {id: check.cart.id }) }}" class="btn btn-primary">Products</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

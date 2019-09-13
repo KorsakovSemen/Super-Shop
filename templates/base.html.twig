@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/bootstrap.css">
+    <link rel="stylesheet" href="/style.css" type="text/css">
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ path('catalog') }}">Super-shop</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item"><a href="{{ path('easyadmin') }}" class="nav-link">Admin</a></li>
+                    {% else %}
+                        <li class="nav-item"><a href="{{ path('catalog') }}" class="nav-link">Catalog</a></li>
+                    {% endif %}
+                </ul>
+
+
+                <form class="form-inline my-2 my-lg-0">
+                    <ul class="navbar-nav mr-auto">
+
+                        {% if app.user %}
+                            <li class="nav-item">
+                                <a class="nav-link" style="color: white">{{ app.user.username }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('cart') }}" class="btn btn-success mr-sm-2">🛒Cart</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ path('fos_user_profile_show') }}"
+                                   class="btn btn-warning mr-sm-2">Profile</a>
+                            </li>
+                        {% endif %}
+
+                        {% if is_granted('ROLE_USER') %}
+                            <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}"
+                                                    class="btn btn-danger mr-sm-2">Logout</a></li>
+                        {% else %}
+                            <a href="{{ path('fos_user_registration_register') }}" class="btn btn-warning mr-sm-2">Register</a>
+                            <a href="{{ path('fos_user_security_login') }}" class="btn btn-info mr-sm-2">Login</a>
+                        {% endif %}
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>
+
+{% block sidebar %}
+<div class="container margin-top-15">
+    <div class="row">
+
+        <div class="col-md-3 col-xs-5 ">
+            <h3 class="my-4">Category</h3>
+            <div class="list-group">
+                {{ render(controller(
+                    'App\\Controller\\RenderController::index'
+                )) }}
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <script type="text/javascript" src="/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <script src="/main.js"></script>
+</div>
+</body>
+</html>

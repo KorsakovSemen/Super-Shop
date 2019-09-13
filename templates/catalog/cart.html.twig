@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+
+{% block sidebar %}
+{% endblock %}
+
+{% block content %}
+
+    <div class="container margin-top-15">
+        <h3>Cart</h3>
+        <div class="table-responsive">
+            <table class="table table-striped table-secondary">
+                <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for c in carts.rows %}
+                    <tr class="table">
+                        <td><a class="center"><img class="card-img-top img-size-100"
+                                                   src="{{ vich_uploader_asset(c.product, 'imageFile') }}" alt="No"></a>
+                        </td>
+                        <td> {{ c.product }}</td>
+                        <td> {{ c.count }}</td>
+                        {% if c.product.typeSale is null %}
+                            <td>{{ c.product.cost * c.count }} Р</td>
+                        {% else %}
+                            <td>
+                                <s>{{ (c.product.cost)*c.count }}</s> {{ (c.product.cost - c.product.typeSale.money)*c.count }}
+                                Р
+                            </td>
+                        {% endif %}
+                        <td><a id="remove" href="{{ path('cart-remove', {id: c.id }) }}"
+                               class="btn btn-primary">Delete</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tr>
+                    <th scope="col">Total</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                    <th scope="col">{{ total }} Р</th>
+                    <th scope="col"></th>
+                </tr>
+            </table>
+        </div>
+        {% if total > 0 %}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+        {% endif %}
+
+    </div>
+
+
+
+{% endblock %}

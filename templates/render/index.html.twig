@@ -1,0 +1,6 @@
+{% block content %}
+    {% for category in categories %}
+        <a href="{{ path('category', {id: category.id }) }}"
+           class="list-group-item list-group-item-action">{{ category.Name }} </a>
+    {% endfor %}
+{% endblock %}
