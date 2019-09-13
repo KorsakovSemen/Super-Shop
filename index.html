@@ -1,1 +1,52 @@
+{% extends 'base.html.twig' %}
 
+
+
+{% block content %}
+
+    <div class="col-lg-9">
+
+        <div class="row">
+            {% for product in products %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a class="center"><img class="card-img-top img-size-200"
+                                               src="{{ vich_uploader_asset(product, 'imageFile') }}"
+                                               alt="No"></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="">{{ product.Name }}</a>
+                            </h4>
+                        </div>
+
+                        <div class="card-body">
+                            {% if product.typeSale != null %}
+                                <s>{{ product.Cost }}</s>
+                                <h5>{{ product.Cost - product.typeSale.money }} Р</h5>
+                            {% else %}
+                                <s style="visibility: hidden">{{ product.Cost }}</s>
+                                <h5>{{ product.Cost }} Р</h5>
+                            {% endif %}
+                            <p class="card-text">{{ product.Brand }}</p>
+                        </div>
+                        {% if is_granted('ROLE_USER') %}
+                            <div class="card-footer">
+                                <a href="{{ path('product', {id: product.id }) }}" class="btn btn-info">Info</a>
+                            </div>
+                        {% else %}
+                            <div class="card-footer">
+                                <a href="{{ path('fos_user_security_login') }}" class="btn btn-info">Info</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+
+{% endblock %}
