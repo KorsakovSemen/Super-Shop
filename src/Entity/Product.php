@@ -41,7 +41,7 @@ class Product
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stock")
+     * @ORM\ManyToOne(targetEntity="Sale")
      * @ORM\JoinColumn(name="typeSale_id",referencedColumnName="id")
      */
     private $typeSale;
@@ -156,12 +156,12 @@ class Product
         return $this;
     }
 
-    public function getTypeSale(): ?Stock
+    public function getTypeSale(): ?Sale
     {
         return $this->typeSale;
     }
 
-    public function setTypeSale(Stock $typeSale): self
+    public function setTypeSale(Sale $typeSale): self
     {
         $this->typeSale = $typeSale;
 
